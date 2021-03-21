@@ -3,9 +3,10 @@ declare(strict_types=1);
 
 namespace UCRM\HTTP\Slim\Services;
 
-use UCRM\HTTP\Slim\Application;
+//use UCRM\HTTP\Slim\Application;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
+use Slim\App;
 use Slim\Exception\HttpNotFoundException;
 use Slim\Interfaces\RouteCollectorProxyInterface;
 use Slim\Interfaces\RouteGroupInterface;
@@ -29,11 +30,11 @@ final class ScriptService extends Service
     /**
      * ScriptService constructor.
      *
-     * @param Application $app The {@see Application} to which this Service belongs.
+     * @param App $app The {@see App} to which this Service belongs.
      * @param string $path The base path to use when loading scripts, defaults to "./scripts/".
      * @param string $prefix An optional {@see RouteGroup} prefix to use for this Service, defaults to "".
      */
-    public function __construct(Application $app, string $path = "./scripts/", string $prefix = "")
+    public function __construct(App $app, string $path = "./scripts/", string $prefix = "")
     {
         parent::__construct($app, $prefix);
         $this->path = $path;
@@ -43,7 +44,7 @@ final class ScriptService extends Service
     /**
      * @inheritDoc
      */
-    public function __invoke(Application $app): RouteGroupInterface
+    public function __invoke(App $app): RouteGroupInterface
     {
         // Mapped, in cases where a DI Container replaces the $this context in Closures.
         $self = $this;

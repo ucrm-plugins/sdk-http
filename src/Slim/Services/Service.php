@@ -3,7 +3,8 @@ declare(strict_types=1);
 
 namespace UCRM\HTTP\Slim\Services;
 
-use UCRM\HTTP\Slim\Application;
+//use UCRM\HTTP\Slim\Application;
+use Slim\App;
 use Slim\Interfaces\RouteCollectorProxyInterface;
 use Slim\Interfaces\RouteGroupInterface;
 use Slim\Routing\RouteCollectorProxy;
@@ -12,7 +13,7 @@ use Slim\Routing\RouteGroup;
 /**
  * An abstract Service class, from which to extend all other Controllers.
  *
- * _NOTE: Controllers can only be added directly to an {@see Application} and can not be part of a {@see RouteGroup},
+ * _NOTE: Controllers can only be added directly to an {@see App} and can not be part of a {@see RouteGroup},
  * as they are special {@see RouteGroup}s themselves._
  *
  * @package UCRM\HTTP\Slim\Services
@@ -25,10 +26,10 @@ abstract class Service extends RouteCollectorProxy implements RouteCollectorProx
     /**
      * Service constructor.
      *
-     * @param Application $app The {@see Application} to which this Service belongs.
+     * @param App $app The {@see App} to which this Service belongs.
      * @param string $prefix An optional {@see RouteGroup} prefix to use for this Service, defaults to "".
      */
-    public function __construct(Application $app, string $prefix = "")
+    public function __construct(App $app, string $prefix = "")
     {
         parent::__construct(
             $app->getResponseFactory(),
@@ -41,10 +42,10 @@ abstract class Service extends RouteCollectorProxy implements RouteCollectorProx
     }
 
     /**
-     * @param Application $app The {@see Application} to which this Service belongs.
+     * @param App $app The {@see App} to which this Service belongs.
      *
      * @return RouteGroupInterface Returns a {@see RouteGroup} for method chaining.
      */
-    public abstract function __invoke(Application $app): RouteGroupInterface;
+    public abstract function __invoke(App $app): RouteGroupInterface;
 
 }

@@ -2463,8 +2463,8 @@
             "version": "dev-master",
             "dist": {
                 "type": "path",
-                "url": "../sdk-common",
-                "reference": "79efb85ebcd5a3d7fed9d42b08a9a4d24e1cb16b"
+                "url": "../common",
+                "reference": "4b376bfeb1f83c7e1e916de7d8dd302e1dfd6b38"
             },
             "require": {
                 "defuse/php-encryption": "~2.2",
@@ -2517,8 +2517,8 @@
             "version": "dev-master",
             "dist": {
                 "type": "path",
-                "url": "../sdk-data",
-                "reference": "0457bd6a7ecd78cb4c86ee0c6276dcf20fa1e09c"
+                "url": "../data",
+                "reference": "dfda08834b88e72e33648374feffd37a8f02033b"
             },
             "require": {
                 "mvqn/data": "dev-master",
@@ -2561,8 +2561,8 @@
             "version": "dev-master",
             "dist": {
                 "type": "path",
-                "url": "../sdk-logging",
-                "reference": "33b020a2c5781a07dbcc0ef400cfddab701290c3"
+                "url": "../logging",
+                "reference": "72997f7adc70db1704c85e966d1e9c5e9c9d44ab"
             },
             "require": {
                 "ext-json": "*",

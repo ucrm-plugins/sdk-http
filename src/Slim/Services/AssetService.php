@@ -4,9 +4,10 @@ declare(strict_types=1);
 namespace UCRM\HTTP\Slim\Services;
 
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
-use UCRM\HTTP\Slim\Application;
+//use UCRM\HTTP\Slim\Application;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Slim\App;
 use Slim\Exception\HttpNotFoundException;
 use Slim\Interfaces\RouteCollectorProxyInterface;
 use Slim\Interfaces\RouteGroupInterface;
@@ -30,12 +31,12 @@ final class AssetService extends Service
     /**
      * AssetService constructor.
      *
-     * @param Application $app The {@see Application} to which this Service belongs.
+     * @param App $app The {@see App} to which this Service belongs.
      * @param string $path The optional base path to use when loading assets, defaults to "./assets/".
      * @param string $prefix An optional {@see RouteGroup} prefix to use for this Service, defaults to "".
      *
      */
-    public function __construct(Application $app, string $path = "./assets/", string $prefix = "")
+    public function __construct(App $app, string $path = "./assets/", string $prefix = "")
     {
         parent::__construct($app, $prefix);
         $this->path = $path;
@@ -45,7 +46,7 @@ final class AssetService extends Service
     /**
      * @inheritDoc
      */
-    public function __invoke(Application $app): RouteGroupInterface
+    public function __invoke(App $app): RouteGroupInterface
     {
         // Mapped, in cases where a DI Container replaces the $this context in Closures.
         $self = $this;

@@ -1,10 +1,17 @@
 <?php /** @noinspection PhpUnusedParameterInspection */
 declare(strict_types=1);
-require_once __DIR__ . "/../vendor/autoload.php";
+require __DIR__ . "/../vendor/autoload.php";
 
 use App\Controllers\ExampleController;
+use Slim\Exception\HttpMethodNotAllowedException;
+use Slim\Exception\HttpNotFoundException;
+use Slim\Exception\HttpUnauthorizedException;
+use Slim\Factory\AppFactory;
+use UCRM\HTTP\Slim\Middleware\Handlers\MethodNotAllowedHandler;
+use UCRM\HTTP\Slim\Middleware\Handlers\NotFoundHandler;
+use UCRM\HTTP\Slim\Middleware\Handlers\UnauthorizedHandler;
 use UCRM\HTTP\Slim\Services\TemplateService;
-use UCRM\HTTP\Slim\TwigApplication;
+use UCRM\HTTP\Slim\Application;
 use UCRM\HTTP\Slim\Services\AssetService;
 use UCRM\HTTP\Slim\Services\ScriptService;
 use UCRM\HTTP\Slim\Middleware\Authentication\AuthenticationHandler;
@@ -26,15 +33,11 @@ use Slim\Routing\RouteCollectorProxy;
  */
 
 // Create and configure our DI Container.
-$container = new DI\Container();
-//$container->set(ContainerInterface::class, DI\create(DI\Container::class)); // NOT necessary, PHP-DI figures it out!
-$container->set(ResponseFactoryInterface::class, DI\create(ResponseFactory::class));
-$container->set(App::class, DI\autowire(TwigApplication::class));
-$container->set(AuthenticationHandler::class, DI\create(AuthenticationHandler::class)->constructor(DI\get(App::class)));
+$container = require __DIR__ . "/config/container.php";
 
-/** @noinspection PhpUnhandledExceptionInspection */
-// Create our default Application.
-$app = $container->get(TwigApplication::class);
+// Create our Application.
+AppFactory::setContainer($container);
+$app = Application::fromApp(AppFactory::create());
 
 // Add and configure our routing middleware.
 $app->addRoutingMiddleware();
@@ -47,11 +50,14 @@ $app->addDefaultErrorHandlers(true, true, true);
 // Add and configure the Twig middleware.
 $app->useTwigTemplateEngine([ __DIR__ . "/views/" ], [ /* "cache" => __DIR__ . "/views/.cache/" */ ], true);
 
-QueryStringRouterExtension::addGlobal("home", "/", ""); // {{ home }}
-QueryStringRouterExtension::addGlobal("test", [ "TEST1", "TEST2" ]); // {{ app.test }}
+//QueryStringRouterExtension::addGlobal("home", "/", ""); // {{ home }}
+$app->addTemplateGlobal("home", "/", "");
+//QueryStringRouterExtension::addGlobal("test", [ "TEST1", "TEST2" ]); // {{ app.test }}
+$app->addTemplateGlobal("test", [ "TEST1", "TEST2" ]);
 
 // Add an application-level Authenticator.
-$app->setDefaultAuthenticator(new FixedAuthenticator(true));
+//$app->setDefaultAuthenticator(new FixedAuthenticator(true));
+$app->add(new FixedAuthenticator(true));
 
 // NOTE: This Service handles any static assets (i.e. png, jpg, html, pdf, etc.)...
 $app->addService(new AssetService($app, __DIR__."/public/", "/public")); // Deeper paths must be listed first!
@@ -123,7 +129,7 @@ $app->get("[/]", function (Request $request, Response $response, $args): Respons
 */
 $app->get("/contact", ExampleController::class . ":contact");
 $app->get("[/]", ExampleController::action("index"));
-$app->get("/users/{name}", ExampleController::action("users"));
+$app->get("/users/{name}", ExampleController::action("users"))->setName("users");
 
 // Finally, run the Application!
 $app->run();

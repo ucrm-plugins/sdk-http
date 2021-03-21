@@ -3,10 +3,11 @@ declare(strict_types=1);
 
 namespace UCRM\HTTP\Slim\Services;
 
-use UCRM\HTTP\Slim\Application;
+//use UCRM\HTTP\Slim\Application;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Container\ContainerInterface as Container;
+use Slim\App;
 use Slim\Exception\HttpNotFoundException;
 use Slim\Interfaces\RouteCollectorProxyInterface;
 use Slim\Interfaces\RouteGroupInterface;
@@ -39,11 +40,11 @@ final class TemplateService extends Service
     /**
      * TemplateService constructor.
      *
-     * @param Application $app The Slim Application for which to configure routing.
+     * @param App $app The Slim Application for which to configure routing.
      * @param string $path The absolute path to the templates directory.
      * @param string $twigContainerKey An optional container key, if the default key "view" is not used.
      */
-    public function __construct(Application $app, string $path, string $twigContainerKey = "view")
+    public function __construct(App $app, string $path, string $twigContainerKey = "view")
     {
         parent::__construct($app);
         $this->path = $path;
@@ -53,7 +54,7 @@ final class TemplateService extends Service
     /**
      * @inheritDoc
      */
-    public function __invoke(Application $app): RouteGroupInterface
+    public function __invoke(App $app): RouteGroupInterface
     {
         // Mapped, in cases where a DI Container replaces the $this context in Closures.
         $self = $this;

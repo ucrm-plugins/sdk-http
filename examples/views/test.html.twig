@@ -20,6 +20,8 @@
     <p>{{ app.url ~ link("/home") }}</p>
     <p><strong>route: {{ route("test", { name: "ryan" }, { test: 123 }) }}</strong></p>
 
+    <p>{{ url_for("users", { "name": "ryan" }) }}</p>
+
     <p>{{ attributes.vRoute }}</p>
     <p>{{ dump(attributes.vQuery) }}</p>
 

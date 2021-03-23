@@ -3,13 +3,13 @@ declare(strict_types=1);
 
 namespace UCRM\HTTP\Slim\Services;
 
-//use UCRM\HTTP\Slim\Application;
+use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
-use Slim\App;
 use Slim\Exception\HttpNotFoundException;
 use Slim\Interfaces\RouteCollectorProxyInterface;
 use Slim\Interfaces\RouteGroupInterface;
+use UCRM\HTTP\Slim\Application;
 
 /**
  * A Service to handle routing and delivery of PHP scripts.
@@ -30,11 +30,11 @@ final class ScriptService extends Service
     /**
      * ScriptService constructor.
      *
-     * @param App $app The {@see App} to which this Service belongs.
+     * @param Application $app The {@see Application} to which this Service belongs.
      * @param string $path The base path to use when loading scripts, defaults to "./scripts/".
      * @param string $prefix An optional {@see RouteGroup} prefix to use for this Service, defaults to "".
      */
-    public function __construct(App $app, string $path = "./scripts/", string $prefix = "")
+    public function __construct(Application $app, string $path = "./scripts/", string $prefix = "")
     {
         parent::__construct($app, $prefix);
         $this->path = $path;
@@ -44,16 +44,18 @@ final class ScriptService extends Service
     /**
      * @inheritDoc
      */
-    public function __invoke(App $app): RouteGroupInterface
+    public function __invoke(Application $app): RouteGroupInterface
     {
         // Mapped, in cases where a DI Container replaces the $this context in Closures.
-        $self = $this;
+        $service = $this;
 
-        return $this->group("", function(RouteCollectorProxyInterface $group) use ($self)
+        return $this->group("", function(RouteCollectorProxyInterface $group) use ($service)
         {
             $group->map([ "GET", "POST" ], "/{file:.+}.{ext:php}",
-                function (Request $request, Response $response, array $args) use ($self)
+                function (Request $request, Response $response, array $args) use ($service)
                 {
+                    /** @var ContainerInterface $this */
+
                     // Get the file and extension from the matched route.
                     $file = $args["file"] ?? "index";
                     $ext = $args["ext"] ?? "php";
@@ -71,7 +73,15 @@ final class ScriptService extends Service
                     */
 
                     // Interpolate the absolute path to the static asset.
-                    $path = realpath(rtrim($self->path, "/") . "/$file.$ext");
+                    $path = realpath(rtrim($service->path, "/") . "/$file.$ext");
+
+                    $service->logger->debug(
+                        "{$service->prefix}/$file.$ext",
+                        [
+                            "service" => ScriptService::class,
+                            "path" => $path
+                        ]
+                    );
 
                     // IF the static asset file does not exist, THEN throw a HTTP 404 Not Found Exception!
                     if (!$path)

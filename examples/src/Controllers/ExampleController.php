@@ -19,9 +19,10 @@ use Psr\Http\Message\ServerRequestInterface as Request;
  */
 class ExampleController extends Controller
 {
-
     public function index(Request $request, Response $response, array $args): Response
     {
+        $this->logger->debug(__FUNCTION__, [ "class" => __CLASS__, "args" => $args ]);
+
         // your code to access items in the container... $this->container->get('');
         $response->getBody()->write("HOME");
         return $response;
@@ -29,6 +30,8 @@ class ExampleController extends Controller
 
     public function contact(Request $request, Response $response, array $args): Response
     {
+        $this->logger->debug(__FUNCTION__, [ "class" => __CLASS__, "args" => $args ]);
+
         // your code to access items in the container... $this->container->get('');
         $response->getBody()->write("CONTACT");
         return $response;
@@ -36,6 +39,8 @@ class ExampleController extends Controller
 
     public function users(Request $request, Response $response, array $args): Response
     {
+        $this->logger->debug(__FUNCTION__, [ "class" => __CLASS__, "args" => $args ]);
+
         // your code to access items in the container... $this->container->get('');
         $response->getBody()->write("USERS: " . $args["name"]);
         return $response;

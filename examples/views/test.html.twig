@@ -22,6 +22,9 @@
 
     <p>{{ url_for("users", { "name": "ryan" }) }}</p>
 
+    <pre>base_path()  : {{ base_path() }}</pre> {# TODO: Replace function for use with our QueryStringRouter #}
+    <pre>current_url(): {{ current_url() }}</pre> {# TODO: Replace function for use with our QueryStringRouter #}
+
     <p>{{ attributes.vRoute }}</p>
     <p>{{ dump(attributes.vQuery) }}</p>
 

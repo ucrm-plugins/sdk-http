@@ -214,5 +214,26 @@ class Application extends App
         QueryStringRouterExtension::addGlobal($name, $value, $namespace);
     }
 
+    /**
+     * A convenience function that simply requires the specified file and then executes it as an IIFE, passing the
+     * current {@see Application} and any optional arguments.
+     *
+     * @param string $file              The path of the file to require.
+     * @param mixed ...$args            Any optional arguments to pass along to the call.
+     *
+     * @return $this                    The current {@see Application}.
+     *
+     * @noinspection PhpIncludeInspection
+     */
+    public function require(string $file, ...$args): self
+    {
+        $func = require $file;
+        $func($this, $args);
+
+        return $this;
+    }
+
+
+
 }
 

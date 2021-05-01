@@ -3765,12 +3765,12 @@
             "source": {
                 "type": "git",
                 "url": "https://gitlab.com/ucrm-plugins/sdk-common.git",
-                "reference": "262fd1dac77f6351b26fc624c079b1557163621b"
+                "reference": "f099aa0775d366ef838f3e794dce81fe267a1684"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://gitlab.com/api/v4/projects/ucrm-plugins%2Fsdk-common/repository/archive.zip?sha=262fd1dac77f6351b26fc624c079b1557163621b",
-                "reference": "262fd1dac77f6351b26fc624c079b1557163621b",
+                "url": "https://gitlab.com/api/v4/projects/ucrm-plugins%2Fsdk-common/repository/archive.zip?sha=f099aa0775d366ef838f3e794dce81fe267a1684",
+                "reference": "f099aa0775d366ef838f3e794dce81fe267a1684",
                 "shasum": ""
             },
             "require": {
@@ -3817,7 +3817,7 @@
             "support": {
                 "issues": "https://gitlab.com/api/v4/projects/25305010/issues"
             },
-            "time": "2021-05-01T00:09:05+00:00"
+            "time": "2021-05-01T00:59:56+00:00"
         },
         {
             "name": "ucrm-plugins/sdk-composer",
@@ -3825,12 +3825,12 @@
             "source": {
                 "type": "git",
                 "url": "https://gitlab.com/ucrm-plugins/sdk-composer.git",
-                "reference": "562a1767af914cf29f66d81dae4b9447a148be6e"
+                "reference": "36f0f1c9aed65e91170a6987af0d19d3cd76abd0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://gitlab.com/api/v4/projects/ucrm-plugins%2Fsdk-composer/repository/archive.zip?sha=562a1767af914cf29f66d81dae4b9447a148be6e",
-                "reference": "562a1767af914cf29f66d81dae4b9447a148be6e",
+                "url": "https://gitlab.com/api/v4/projects/ucrm-plugins%2Fsdk-composer/repository/archive.zip?sha=36f0f1c9aed65e91170a6987af0d19d3cd76abd0",
+                "reference": "36f0f1c9aed65e91170a6987af0d19d3cd76abd0",
                 "shasum": ""
             },
             "require": {
@@ -3872,7 +3872,7 @@
             "support": {
                 "issues": "https://gitlab.com/api/v4/projects/25965598/issues"
             },
-            "time": "2021-05-01T00:04:04+00:00"
+            "time": "2021-05-01T00:38:11+00:00"
         },
         {
             "name": "ucrm-plugins/sdk-data",
@@ -3880,12 +3880,12 @@
             "source": {
                 "type": "git",
                 "url": "https://gitlab.com/ucrm-plugins/sdk-data.git",
-                "reference": "0457bd6a7ecd78cb4c86ee0c6276dcf20fa1e09c"
+                "reference": "dbf32080ca0d56291c2aebc4485b38d0210b57e9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://gitlab.com/api/v4/projects/ucrm-plugins%2Fsdk-data/repository/archive.zip?sha=0457bd6a7ecd78cb4c86ee0c6276dcf20fa1e09c",
-                "reference": "0457bd6a7ecd78cb4c86ee0c6276dcf20fa1e09c",
+                "url": "https://gitlab.com/api/v4/projects/ucrm-plugins%2Fsdk-data/repository/archive.zip?sha=dbf32080ca0d56291c2aebc4485b38d0210b57e9",
+                "reference": "dbf32080ca0d56291c2aebc4485b38d0210b57e9",
                 "shasum": ""
             },
             "require": {
@@ -3921,7 +3921,7 @@
             "support": {
                 "issues": "https://gitlab.com/api/v4/projects/25305012/issues"
             },
-            "time": "2021-03-21T02:50:15+00:00"
+            "time": "2021-05-01T01:02:12+00:00"
         },
         {
             "name": "ucrm-plugins/sdk-logging",
@@ -3929,12 +3929,12 @@
             "source": {
                 "type": "git",
                 "url": "https://gitlab.com/ucrm-plugins/sdk-logging.git",
-                "reference": "1fe55375d2aff010d023777d30fb8216d835997d"
+                "reference": "641140c695de58ef9ce46cdcf2dfb71349f13a7c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://gitlab.com/api/v4/projects/ucrm-plugins%2Fsdk-logging/repository/archive.zip?sha=1fe55375d2aff010d023777d30fb8216d835997d",
-                "reference": "1fe55375d2aff010d023777d30fb8216d835997d",
+                "url": "https://gitlab.com/api/v4/projects/ucrm-plugins%2Fsdk-logging/repository/archive.zip?sha=641140c695de58ef9ce46cdcf2dfb71349f13a7c",
+                "reference": "641140c695de58ef9ce46cdcf2dfb71349f13a7c",
                 "shasum": ""
             },
             "require": {
@@ -3970,7 +3970,7 @@
             "support": {
                 "issues": "https://gitlab.com/api/v4/projects/25305014/issues"
             },
-            "time": "2021-03-21T03:26:48+00:00"
+            "time": "2021-05-01T01:07:06+00:00"
         },
         {
             "name": "vlucas/phpdotenv",

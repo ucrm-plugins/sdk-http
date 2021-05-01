@@ -6,7 +6,7 @@ namespace UCRM\HTTP\Twig\Extensions;
 use DateTime;
 use Exception;
 use UCRM\HTTP\Slim\Middleware\Routing\QueryStringRouter;
-use UCRM\HTTP\Slim\TwigApplication;
+use UCRM\HTTP\Slim\Application;
 use Twig\Extension\GlobalsInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TokenParser\TokenParserInterface;
@@ -24,7 +24,7 @@ use Twig\TwigFunction;
 class QueryStringRouterExtension extends AbstractExtension implements GlobalsInterface
 {
     /**
-     * @var TwigApplication The {@see Application} on which this Twig Extension operates.
+     * @var Application The {@see Application} on which this Twig Extension operates.
      */
     protected $app;
 
@@ -40,13 +40,13 @@ class QueryStringRouterExtension extends AbstractExtension implements GlobalsInt
     /**
      * QueryStringRouterExtension constructor.
      *
-     * @param TwigApplication $app The {@see Application} on which this Twig Extension operates.
+     * @param Application $app The {@see Application} on which this Twig Extension operates.
      * @param string $controller The front-controller script as an URL prefix, defaults to "/index.php".
      * @param array $globals An optional array of global values to be made available to all Twig templates.
      * @param bool $debug Determines whether or not to display additional debug messages, defaults to FALSE.
      */
-    public function __construct(TwigApplication $app, string $controller = "/index.php", array $globals = [],
-        bool $debug = false)
+    public function __construct(Application $app, string $controller = "/index.php", array $globals = [],
+                                bool $debug = false)
     {
         $this->app = $app;
 

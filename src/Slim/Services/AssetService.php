@@ -3,13 +3,13 @@ declare(strict_types=1);
 
 namespace UCRM\HTTP\Slim\Services;
 
-use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
-use UCRM\HTTP\Slim\Application;
+use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Exception\HttpNotFoundException;
 use Slim\Interfaces\RouteCollectorProxyInterface;
 use Slim\Interfaces\RouteGroupInterface;
+use UCRM\HTTP\Slim\Application;
 
 /**
  * A Service to handle routing and delivery of static assets.
@@ -44,24 +44,28 @@ final class AssetService extends Service
 
     /**
      * @inheritDoc
+     *
+     * @noinspection SpellCheckingInspection (Content-Type)
      */
     public function __invoke(Application $app): RouteGroupInterface
     {
         // Mapped, in cases where a DI Container replaces the $this context in Closures.
-        $self = $this;
+        $service = $this;
 
-        return $this->group("", function(RouteCollectorProxyInterface $group) use ($self)
+        return $this->group("", function(RouteCollectorProxyInterface $group) use ($service)
         {
             // NOTE: More asset types can be added as necessary...
             $group->map([ "GET" ], "/{file:.+}.{ext:jpg|png|pdf|txt|css|js|htm|html|svg|ttf|woff|woff2}",
-                function (Request $request, Response $response, array $args) use ($self)
+                function (Request $request, Response $response, array $args) use ($service)
                 {
+                    /** @var ContainerInterface $this */
+
                     // Get the file and extension from the matched route.
                     $file = $args["file"];
                     $ext = $args["ext"];
 
                     // Interpolate the absolute path to the static asset.
-                    $path = realpath(rtrim($self->path, "/") . "/$file.$ext");
+                    $path = realpath(rtrim($service->path, "/") . "/$file.$ext");
 
                     // IF the static asset file does not exist, THEN throw a HTTP 404 Not Found Exception!
                     if (!$path)
@@ -91,6 +95,15 @@ final class AssetService extends Service
 
                         default     :   $contentType = "application/octet-stream";          break;
                     }
+
+                    $service->logger->debug(
+                        "{$service->prefix}/$file.$ext",
+                        [
+                            "service" => AssetService::class,
+                            "path" => $path,
+                            "content-type" => $contentType
+                        ]
+                    );
 
                     // Finally, set the response Content-Type header and return the response!
                     return $response->withHeader("Content-Type", $contentType);

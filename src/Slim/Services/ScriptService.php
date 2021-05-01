@@ -3,12 +3,13 @@ declare(strict_types=1);
 
 namespace UCRM\HTTP\Slim\Services;
 
-use UCRM\HTTP\Slim\Application;
+use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Exception\HttpNotFoundException;
 use Slim\Interfaces\RouteCollectorProxyInterface;
 use Slim\Interfaces\RouteGroupInterface;
+use UCRM\HTTP\Slim\Application;
 
 /**
  * A Service to handle routing and delivery of PHP scripts.
@@ -46,13 +47,15 @@ final class ScriptService extends Service
     public function __invoke(Application $app): RouteGroupInterface
     {
         // Mapped, in cases where a DI Container replaces the $this context in Closures.
-        $self = $this;
+        $service = $this;
 
-        return $this->group("", function(RouteCollectorProxyInterface $group) use ($self)
+        return $this->group("", function(RouteCollectorProxyInterface $group) use ($service)
         {
             $group->map([ "GET", "POST" ], "/{file:.+}.{ext:php}",
-                function (Request $request, Response $response, array $args) use ($self)
+                function (Request $request, Response $response, array $args) use ($service)
                 {
+                    /** @var ContainerInterface $this */
+
                     // Get the file and extension from the matched route.
                     $file = $args["file"] ?? "index";
                     $ext = $args["ext"] ?? "php";
@@ -70,7 +73,15 @@ final class ScriptService extends Service
                     */
 
                     // Interpolate the absolute path to the static asset.
-                    $path = realpath(rtrim($self->path, "/") . "/$file.$ext");
+                    $path = realpath(rtrim($service->path, "/") . "/$file.$ext");
+
+                    $service->logger->debug(
+                        "{$service->prefix}/$file.$ext",
+                        [
+                            "service" => ScriptService::class,
+                            "path" => $path
+                        ]
+                    );
 
                     // IF the static asset file does not exist, THEN throw a HTTP 404 Not Found Exception!
                     if (!$path)

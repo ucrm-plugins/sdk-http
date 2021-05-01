@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 namespace UCRM\HTTP\Slim\Services;
 
-use UCRM\HTTP\Slim\Application;
+use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Psr\Container\ContainerInterface as Container;
 use Slim\Exception\HttpNotFoundException;
 use Slim\Interfaces\RouteCollectorProxyInterface;
 use Slim\Interfaces\RouteGroupInterface;
 use Slim\Views\Twig;
 use Twig\Loader\FilesystemLoader;
+use UCRM\HTTP\Slim\Application;
 
 /**
  * Class TemplateService
@@ -56,38 +56,45 @@ final class TemplateService extends Service
     public function __invoke(Application $app): RouteGroupInterface
     {
         // Mapped, in cases where a DI Container replaces the $this context in Closures.
-        $self = $this;
+        $service = $this;
 
-        return $this->group("", function(RouteCollectorProxyInterface $group) use ($self)
+        return $this->group("", function(RouteCollectorProxyInterface $group) use ($service)
         {
             $group->map([ "GET" ], "/{file:.+}.{ext:twig}",
-                function (Request $request, Response $response, array $args) use ($self)
+                function (Request $request, Response $response, array $args) use ($service)
                 {
-                    /** @var Container $this */
-                    $container = $this;
+                    /** @var ContainerInterface $this */
 
                     // Get the file and extension from the matched route.
                     list($file, $ext) = array_values($args);
 
                     // Interpolate the absolute path to the Twig template.
-                    $template = rtrim($self->path, "/") . "/$file.$ext";
+                    $template = realpath(rtrim($service->path, "/") . "/$file.$ext");
 
                     // Get local references to the Twig Environment and Loader.
                     /** @var Twig $twig */
-                    $twig = $container->get($self->twigContainerKey);
+                    $twig = $this->get($service->twigContainerKey);
 
                     /** @var FilesystemLoader $loader */
                     $loader = $twig->getLoader();
 
                     // IF the TemplateService's path is not already in the Loader's list of paths, THEN add it!
-                    if(!in_array(realpath($self->path), $loader->getPaths()))
-                        $loader->addPath(realpath($self->path));
+                    if(!in_array(realpath($service->path), $loader->getPaths()))
+                        $loader->addPath(realpath($service->path));
 
                     // Assemble some standard data to send along to the Twig template!
                     $data = [
                         "attributes" => $request->getAttributes(),
                         "uri" => $request->getUri(),
                     ];
+
+                    $service->logger->debug(
+                        "{$service->prefix}/$file.$ext",
+                        [
+                            "service" => TemplateService::class,
+                            "path" => $template
+                        ]
+                    );
 
                     // IF the template file exists AND is not a directory...
                     if (file_exists($template) && !is_dir($template))

@@ -3,17 +3,18 @@ declare(strict_types=1);
 
 namespace UCRM\HTTP\Slim\Services;
 
-use UCRM\HTTP\Slim\Application;
+use Psr\Log\LoggerInterface;
 use Slim\Interfaces\RouteCollectorProxyInterface;
 use Slim\Interfaces\RouteGroupInterface;
 use Slim\Routing\RouteCollectorProxy;
 use Slim\Routing\RouteGroup;
+use UCRM\HTTP\Slim\Application;
 
 /**
- * An abstract Service class, from which to extend all other Controllers.
+ * An abstract Service class, from which to extend all other Services.
  *
  * _NOTE: Controllers can only be added directly to an {@see Application} and can not be part of a {@see RouteGroup},
- * as they are special {@see RouteGroup}s themselves._
+ * as they are a special {@see RouteGroup} themselves._
  *
  * @package UCRM\HTTP\Slim\Services
  *
@@ -22,6 +23,12 @@ use Slim\Routing\RouteGroup;
  */
 abstract class Service extends RouteCollectorProxy implements RouteCollectorProxyInterface
 {
+    protected $container;
+
+    protected $logger;
+
+    protected $prefix;
+
     /**
      * Service constructor.
      *
@@ -30,12 +37,15 @@ abstract class Service extends RouteCollectorProxy implements RouteCollectorProx
      */
     public function __construct(Application $app, string $prefix = "")
     {
+        $this->container = $app->getContainer();
+        $this->logger = $this->container ? $this->container->get(LoggerInterface::class) : null;
+
         parent::__construct(
             $app->getResponseFactory(),
             $app->getCallableResolver(),
             $app->getContainer(),
             $app->getRouteCollector(),
-            $prefix
+            $this->prefix = $prefix ?: ""
         );
 
     }

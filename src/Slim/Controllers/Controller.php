@@ -3,7 +3,10 @@ declare(strict_types=1);
 
 namespace UCRM\HTTP\Slim\Controllers;
 
+use FastRoute\BadRouteException;
 use Psr\Container\ContainerInterface;
+use Psr\Http\Message\ServerRequestInterface as ServerRequest;
+use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -15,7 +18,7 @@ use Psr\Log\LoggerInterface;
  * @package UCRM\HTTP\Controllers
  *
  */
-abstract class Controller
+abstract class Controller implements ControllerInterface
 {
     protected $container;
 
@@ -31,6 +34,22 @@ abstract class Controller
         $this->logger = $logger;
     }
 
+
+    public function __invoke( ServerRequest $request, Response $response, array $args ): Response
+    {
+        if( !$args || !array_key_exists( "action", $args ) )
+            $args["action"] = "index";
+
+        if( !method_exists($this, $args["action"] ) )
+            throw new BadRouteException(
+                "Controller '" . get_class($this). "' does not contain a method for Action '" . $args['action'] . "'");
+
+        $method = $args["action"];
+
+        return $this->$method($request, $response, $args);
+    }
+
+
     /**
      * @param string $action
      * @return string
@@ -39,7 +58,5 @@ abstract class Controller
     {
         return get_called_class() . ":$action";
     }
-
-
 
 }

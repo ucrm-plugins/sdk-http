@@ -19,6 +19,7 @@
      * @var array               $vQuery
      * @var Authenticator       $authenticator
      * @var RouteInterface[]    $routes
+     * @var string              $message
      */
     if (isset($data))
         list(
@@ -26,11 +27,19 @@
             $vRoute,
             $vQuery,
             $authenticator,
-            $routes
+            $routes,
+            $message
         ) = array_values($data);
     ?>
 
     <?php if ($debug) { ?>
+
+        <?php if ($message && $message !== "Not found.") { ?>
+            <h4>Message:</h4>
+            <ul>
+                <li><?php echo $message; ?></li>
+            </ul>
+        <?php } ?>
 
         <h4>Virtual Route:</h4>
         <ul>

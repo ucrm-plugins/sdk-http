@@ -3,11 +3,11 @@ declare(strict_types=1);
 
 namespace UCRM\HTTP\Slim\Controllers;
 
-use FastRoute\BadRouteException;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface as ServerRequest;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Log\LoggerInterface;
+use Slim\Exception\HttpNotFoundException;
 
 /**
  * @copyright 2020 - Spaeth Technologies, Inc.
@@ -35,14 +35,19 @@ abstract class Controller implements ControllerInterface
     }
 
 
-    public function __invoke( ServerRequest $request, Response $response, array $args ): Response
+    /**
+     * @throws HttpNotFoundException
+     */
+    public function __invoke(ServerRequest $request, Response $response, array $args ): Response
     {
         if( !$args || !array_key_exists( "action", $args ) )
             $args["action"] = "index";
 
         if( !method_exists($this, $args["action"] ) )
-            throw new BadRouteException(
-                "Controller '" . get_class($this). "' does not contain a method for Action '" . $args['action'] . "'");
+            throw new HttpNotFoundException($request,
+                sprintf( "No Action method '%s' was not found in Controller class '%s'",
+                $args['action'], get_class( $this ) )
+            );
 
         $method = $args["action"];
 

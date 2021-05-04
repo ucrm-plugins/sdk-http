@@ -36,6 +36,7 @@ final class NotFoundHandler extends ErrorHandler
             "vQuery"        => $request->getAttribute("vQuery"),
             "authenticator" => $request->getAttribute("authenticator"),
             "routes"        => $this->app->getRouteCollector()->getRoutes(),
+            "message"       => $exception->getMessage(),
         ];
 
         // Instantiate a response object and return the rendered template.

@@ -34,8 +34,15 @@ abstract class Controller implements ControllerInterface
         $this->logger = $logger;
     }
 
-
     /**
+     * Handles dynamic Controller actions, based upon the "action" argument passed with the route.
+     *
+     * @param ServerRequest $request    The Request object.
+     * @param Response $response        The current Response object.
+     * @param array $args               Any arguments parsed form the route.
+     *
+     * @return Response                 Returns the modified Response object.
+     *
      * @throws HttpNotFoundException
      */
     public function __invoke(ServerRequest $request, Response $response, array $args ): Response
@@ -54,10 +61,11 @@ abstract class Controller implements ControllerInterface
         return $this->$method($request, $response, $args);
     }
 
-
     /**
-     * @param string $action
-     * @return string
+     * A {@see Controller} "helper" function to return a callable action for Slim.
+     *
+     * @param string $action            The method name on the {@see Controller}.
+     * @return string                   Returns a Slim compatible controller action.
      */
     public static function action(string $action): string
     {

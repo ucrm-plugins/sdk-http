@@ -6,6 +6,15 @@ namespace UCRM\HTTP\Slim\Controllers;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as ServerRequest;
 
+/**
+ * @copyright 2019 Spaeth Technologies, Inc.
+ * @author    Ryan Spaeth (rspaeth@mvqn.net)
+ *
+ * The Interface that all controllers shouild implement.
+ *
+ * @package UCRM\HTTP
+ *
+ */
 interface ControllerInterface
 {
     /**

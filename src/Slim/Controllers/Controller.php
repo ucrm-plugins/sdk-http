@@ -10,18 +10,20 @@ use Psr\Log\LoggerInterface;
 use Slim\Exception\HttpNotFoundException;
 
 /**
- * @copyright 2020 - Spaeth Technologies, Inc.
- * @author Ryan Spaeth <rspaeth@mvqn.net>
+ * @copyright 2019 Spaeth Technologies, Inc.
+ * @author    Ryan Spaeth (rspaeth@mvqn.net)
  *
- * Class ExampleController
+ * The base Controller class from which all controllers should extend.
  *
- * @package UCRM\HTTP\Controllers
- *
+ * @package UCRM\HTTP
+ * @abstract
  */
 abstract class Controller implements ControllerInterface
 {
+    /** @var ContainerInterface */
     protected $container;
 
+    /** @var LoggerInterface */
     protected $logger;
 
     /**

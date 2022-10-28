@@ -13,7 +13,7 @@ use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
  * @package UCRM\HTTP\Slim\Middleware\Authentication\Authenticators
  *
  * @author Ryan Spaeth
- * @copyright 2020 Spaeth Technologies, Inc.
+ * @copyright 2020 Spaeth Technologies Inc.
  */
 class FixedAuthenticator extends Authenticator
 {

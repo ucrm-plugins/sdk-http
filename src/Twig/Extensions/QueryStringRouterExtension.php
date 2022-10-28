@@ -19,7 +19,7 @@ use Twig\TwigFunction;
  * @package UCRM\HTTP\Twig
  *
  * @author Ryan Spaeth
- * @copyright 2020 Spaeth Technologies, Inc.
+ * @copyright 2020 Spaeth Technologies Inc.
  */
 class QueryStringRouterExtension extends AbstractExtension implements GlobalsInterface
 {

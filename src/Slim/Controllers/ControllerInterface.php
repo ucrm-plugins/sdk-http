@@ -7,8 +7,8 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as ServerRequest;
 
 /**
- * @copyright 2019 Spaeth Technologies, Inc.
- * @author    Ryan Spaeth (rspaeth@mvqn.net)
+ * @copyright 2019 Spaeth Technologies Inc.
+ * @author    Ryan Spaeth (rspaeth@spaethtech.com)
  *
  * The Interface that all controllers shouild implement.
  *

@@ -15,7 +15,7 @@ use Psr\Http\Server\RequestHandlerInterface;
  * @final
  *
  * @author Ryan Spaeth
- * @copyright 2020 Spaeth Technologies, Inc.
+ * @copyright 2020 Spaeth Technologies Inc.
  */
 final class QueryStringRouter implements MiddlewareInterface
 {

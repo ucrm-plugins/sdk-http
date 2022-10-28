@@ -10,8 +10,8 @@ use Psr\Log\LoggerInterface;
 use Slim\Exception\HttpNotFoundException;
 
 /**
- * @copyright 2019 Spaeth Technologies, Inc.
- * @author    Ryan Spaeth (rspaeth@mvqn.net)
+ * @copyright 2019 Spaeth Technologies Inc.
+ * @author    Ryan Spaeth (rspaeth@spaethtech.com)
  *
  * The base Controller class from which all controllers should extend.
  *

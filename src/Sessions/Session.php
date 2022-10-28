@@ -12,7 +12,7 @@ use UCRM\Common\Config;
  * Class Session
  *
  * @package UCRM\Sessions
- * @author Ryan Spaeth <rspaeth@mvqn.net>
+ * @author Ryan Spaeth <rspaeth@spaethtech.com>
  */
 class Session
 {

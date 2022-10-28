@@ -14,7 +14,7 @@ use Twig\Node\Node;
  * @final
  *
  * @author Ryan Spaeth
- * @copyright 2020 Spaeth Technologies, Inc.
+ * @copyright 2020 Spaeth Technologies Inc.
  */
 final class SwitchNode extends Node
 {

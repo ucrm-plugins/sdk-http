@@ -12,7 +12,7 @@ use Slim\Psr7\Factory\ResponseFactory;
  * @package UCRM\HTTP\Slim\Psr7\Http\Message
  *
  * @author Ryan Spaeth
- * @copyright 2020 Spaeth Technologies, Inc.
+ * @copyright 2020 Spaeth Technologies Inc.
  */
 class JsonResponse
 {

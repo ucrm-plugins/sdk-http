@@ -13,7 +13,7 @@ use Throwable;
  * @package UCRM\HTTP\Slim\Error\Handlers
  *
  * @author Ryan Spaeth
- * @copyright 2020 Spaeth Technologies, Inc.
+ * @copyright 2020 Spaeth Technologies Inc.
  */
 final class NotFoundHandler extends ErrorHandler
 {

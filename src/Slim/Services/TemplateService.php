@@ -22,7 +22,7 @@ use UCRM\HTTP\Slim\Application;
  * @final
  *
  * @author Ryan Spaeth
- * @copyright 2020 Spaeth Technologies, Inc.
+ * @copyright 2020 Spaeth Technologies Inc.
  */
 final class TemplateService extends Service
 {

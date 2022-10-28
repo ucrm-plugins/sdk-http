@@ -19,7 +19,7 @@ use UCRM\HTTP\Slim\Application;
  * @package UCRM\HTTP\Slim\Services
  *
  * @author Ryan Spaeth
- * @copyright 2020 Spaeth Technologies, Inc.
+ * @copyright 2020 Spaeth Technologies Inc.
  */
 abstract class Service extends RouteCollectorProxy implements RouteCollectorProxyInterface
 {

@@ -31,7 +31,7 @@ use Slim\Views\Twig;
  * @package UCRM\HTTP\Slim
  *
  * @author Ryan Spaeth
- * @copyright 2020 - Spaeth Technologies, Inc.
+ * @copyright 2020 - Spaeth Technologies Inc.
  */
 class Application extends App
 {
@@ -236,4 +236,3 @@ class Application extends App
 
 
 }
-
